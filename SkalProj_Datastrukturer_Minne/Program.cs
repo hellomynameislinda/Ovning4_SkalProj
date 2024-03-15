@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -72,12 +73,57 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
 
-            //switch(nav){...}
+            /*
+             * Övning 1 - Frågor
+             * 1. Se nedan.
+             * 2. Kapaciteten ökar när de platser i listan som finns är fulla.
+             * 3. Kapaciteten börjar på fyra och ökar exponentiellt/dubblas när behov av ny plats uppstår. Dvs 4->8->16 osv.
+             * 4. 
+             * 5. Kapaciteten minskar aldrig.
+             * 6. Vet man i förväg exakt hur många objekt man kommer ha så kommer en array vara mer minnessnål, på grund av
+             *    ovanstående, då arrayen bara tar upp den minnesplats som behövs. Men känner man inte till storleken när den
+             *    initialiseras så kan man ofta behöva ta i rejält i överkant.
+             */
+            
+
+
+            List<string> theList = new List<string>();
+            Console.WriteLine($"Before we start the list size is  {theList.Capacity}.");
+            Console.WriteLine("Start a string with + to add it to the list. E.g. '+Adam'.\n" +
+                "Start a string with - to add it to the list. E.g. '-Adam'.\n" +
+                "T to trim the list.\n" +
+                "0 to exit.");
+
+            do
+            {
+
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav){
+                    case '+':
+                        theList.Add(value);
+                        Console.Write($"Added {value}. ");
+                        break;
+                    case '-':
+                        theList.Remove(value);
+                        Console.Write($"Removed {value}. ");
+                        break;
+                    case 'T':
+                        theList.TrimExcess();
+                        Console.WriteLine("The list was trimmed.");
+                        break;
+                    case '0':
+                        Console.Clear();
+                        // Exit
+                        return;
+                }
+                Console.WriteLine($"The list size is now {theList.Capacity}.");
+
+            } while (true);
+          
         }
 
         /// <summary>
@@ -90,6 +136,43 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            Queue<string> theQueue = new Queue<string>();
+            Console.WriteLine("Start a string with + to add someone to the queue. E.g. '+Adam'.\n" +
+                "- to remove the fist.\n" +
+                "T to trim the list.\n" +
+                "0 to exit.");
+
+            Console.WriteLine($"ICA öppnar och kön till kassan är tom."); // Hej svengelska! Men det följer uppgiftern;)
+            do
+            {
+
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav) // Let's keep the same switch as above, for simplicity.
+                {
+                    case '+':
+                        theQueue.Enqueue(value);
+                        Console.Write($"{value} ställer sig i kön. ");
+                        break;
+                    case '-':
+                        // TODO: Change to TryPeek and TryDequeue respectively
+                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön. ");
+                        theQueue.Dequeue();
+                        break;
+                    //case 'T':
+                    //    theList.TrimExcess();
+                    //    Console.WriteLine("The list was trimmed.");
+                    //    break;
+                    case '0':
+                        Console.Clear();
+                        // Exit
+                        return;
+                }
+                Console.WriteLine($"Nu är det {theQueue.Count} personer i kön.");
+
+            } while (true);
         }
 
         /// <summary>
