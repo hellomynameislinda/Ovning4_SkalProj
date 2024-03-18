@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using static System.Net.Mime.MediaTypeNames;
 using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
+using System.ComponentModel.Design;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -132,6 +133,11 @@ namespace SkalProj_Datastrukturer_Minne
             {
 
                 string input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Input can not be empty, please try again.");
+                    continue;
+                }
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -181,6 +187,11 @@ namespace SkalProj_Datastrukturer_Minne
             {
 
                 string input = Console.ReadLine();
+                if (string.IsNullOrEmpty(input)) // Could have been a function instead, as it is used multiple times, but I'm running out of time.
+                {
+                    Console.WriteLine("Input can not be empty, please try again.");
+                    continue;
+                }
                 char nav = input[0];
                 string value = input.Substring(1);
 
@@ -191,9 +202,16 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.Write($"{value} ställer sig i kön. ");
                         break;
                     case '-':
-                        // TODO: Change to TryPeek and TryDequeue respectively
-                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön.");
-                        theQueue.Dequeue();
+                        // Doing a simple check, TryPeek and TryDequeue might have been better choises
+                        if (theQueue.Count > 0)
+                        {
+                            Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön.");
+                            theQueue.Dequeue();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Kön är tom, det finns ingen att expidiera.");
+                        }
                         break;
                     case '0':
                         Console.Clear();
@@ -228,7 +246,12 @@ namespace SkalProj_Datastrukturer_Minne
                 Stack<string> theStack = new Stack<string>();
 
                 Console.WriteLine("Enter a string to add to the stack (or 0 to exit):");
-                string inputString = Console.ReadLine(); // TODO: Check this isn't empty.
+                string inputString = Console.ReadLine();
+                if (string.IsNullOrEmpty(inputString))
+                {
+                    Console.WriteLine("Input can not be empty, please try again.");
+                    continue;
+                }
 
                 if (inputString == "0") return; // Exit if user enters a 0, as this part does not require a menu
 
@@ -262,7 +285,13 @@ namespace SkalProj_Datastrukturer_Minne
             do
             {
                 Console.WriteLine("Enter a valid piece of code (or 0 to exit):");
-                string inputString = Console.ReadLine(); // TODO: Check this isn't empty.
+                string inputString = Console.ReadLine();
+                if (string.IsNullOrEmpty(inputString))
+                {
+                    Console.WriteLine("Input can not be empty, please try again.");
+                    continue;
+                }
+
 
                 if (inputString == "0") return; // Exit if user enters a 0, as this part does not require a menu
 
