@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using static System.Net.Mime.MediaTypeNames;
+using System.Runtime.Intrinsics.X86;
+using System.Threading.Tasks;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -11,6 +16,30 @@ namespace SkalProj_Datastrukturer_Minne
         /// <param name="args"></param>
         static void Main()
         {
+            /*
+             * Teori och fakta - Frågor
+             * 1.I stacken lagras tex variabler och funktioner medan de används och raderas sedan
+             * automatiskt.Saker som lagras i stacken hamnar i den ordning de används och tas
+             * bort vartefter scopet för funktion eller variabel inte längre är aktuellt (alltså
+             * Först in / Sist ut). Ett begränsat utrymme allokeras på en gång och och kan inte
+             * reallokeras, detta gör stacken snabbare än heapen, men mer begränsad.
+             * I heapen lagras objekt. Lagringen kan ske fragmenterat och däremet reallokeras.
+             * När objekten används behöver garbage collectorn hela tiden monitorera användningen
+             * och ta bort objekt. Dock underbart att slippa hålla koll på det själv, som i C++;)
+             * 
+             * 2.Value Types sparar ett värde direkt mot variabeln medan en Reference Type sparar en
+             * hänvisning / referens till värdet.
+             * 
+             * 3.Det första exemplet är x och y int, en Value Type. x och y är således sparade som
+             * två helt åtskilda värden.
+             * Det andra exemplet så är x och y objekt av klassen MyInt, alltså Reference Typ. När
+             * y tilldelas x så får y inte det lagrade innehållet från x, utan värdet i den är
+             * referensen till objektet x.När värdet ändras för y.MyValue så hänvisar det till
+             * samma objekt som x, och därmed samma värde som x.MyValue - så ändras det ena så
+             * ändras det andra.
+             */
+
+
 
             while (true)
             {
@@ -79,7 +108,11 @@ namespace SkalProj_Datastrukturer_Minne
              * 1. Se nedan.
              * 2. Kapaciteten ökar när de platser i listan som finns är fulla.
              * 3. Kapaciteten börjar på fyra och ökar exponentiellt/dubblas när behov av ny plats uppstår. Dvs 4->8->16 osv.
-             * 4. 
+             * 4. Eftersom en ökning av listans kapacitet i bakgrunden innebär att göra en kopia av innehållet från en mindre 
+             *    array till en större så innebär varje ökning av kapaciteten en kostnad som måste ställas mot kostnaden av
+             *    att allokera mer minne än vad som behövs.
+             *    Eller som en klasskompis (med mer mattebakgrund) sa när vi diskuterade, en exponentiell ökning ger en linjär
+             *    kostnad (i stort sett) och en linjär ökning (alltså att öka med en plats i taget) ger en exponentiell kostnad.
              * 5. Kapaciteten minskar aldrig.
              * 6. Vet man i förväg exakt hur många objekt man kommer ha så kommer en array vara mer minnessnål, på grund av
              *    ovanstående, då arrayen bara tar upp den minnesplats som behövs. Men känner man inte till storleken när den
@@ -182,6 +215,13 @@ namespace SkalProj_Datastrukturer_Minne
              * hjälp av en stack vänder ordning på teckenföljden för att sen skriva ut den omvända 
              * strängen till användaren.             
              */
+
+
+            /*
+            * Övning 3 - Frågor
+            * 1. Det blir inte så bra att använda stacken till ICA-kön, eftersom folk bak i kön
+            *    blir så sura när den som kommer sist får hjälp först ;)
+            */
             do
             {
 
@@ -218,7 +258,69 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
 
+            // Added two functions below to help out that should probably have been in a class, but keeping it simple ;)
+            do
+            {
+                Console.WriteLine("Enter a valid piece of code (or 0 to exit):");
+                string inputString = Console.ReadLine(); // TODO: Check this isn't empty.
+
+                if (inputString == "0") return; // Exit if user enters a 0, as this part does not require a menu
+
+                Console.WriteLine(TestIfWellFormed(inputString));
+
+            } while (true);
+
         }
+
+        static string TestIfWellFormed(string inputString)
+        {
+            Stack<char> theStack = new Stack<char>();
+
+            foreach (char c in inputString)
+            {
+                if (c == '{' || c == '(' || c == '[')
+                {
+                    theStack.Push(c);
+                }
+                else if (c == ']' || c == ')' || c == '}')
+                {
+                    if (theStack.TryPeek(out char result))
+                    {
+                        if (compareParentheses(result, c))
+                        {
+                            theStack.Pop();
+                            continue;
+                        }
+                        else
+                        {
+                            return $"You are trying to close a {c} that was never opened.";
+                        }
+                    }
+                    else
+                    {
+                        return $"You are trying to close a {c} before any paretheses or brackets were opened.";
+                    }
+                }
+            }
+            if (theStack.Count != 0)
+                return "You still have parenthesis or brackets that needs closing.";
+
+            // If nothing failed
+            return "Good job! This is a well formed string!";
+        }
+        static bool compareParentheses(char topOfStack, char current)
+        {
+            // Changing the value of the parenthesis in the stack to the opposite one
+            // for easier comparison. More readable than multiple if-statements in the
+            // loop.
+
+            if (topOfStack == '{') topOfStack = '}';
+            else if (topOfStack == '(') topOfStack = ')';
+            else if (topOfStack == '[') topOfStack = ']';
+
+            return topOfStack == current;
+        }
+
     }
 
 }
