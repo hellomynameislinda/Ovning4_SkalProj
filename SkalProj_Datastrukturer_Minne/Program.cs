@@ -85,7 +85,7 @@ namespace SkalProj_Datastrukturer_Minne
              *    ovanstående, då arrayen bara tar upp den minnesplats som behövs. Men känner man inte till storleken när den
              *    initialiseras så kan man ofta behöva ta i rejält i överkant.
              */
-            
+
 
 
             List<string> theList = new List<string>();
@@ -102,7 +102,8 @@ namespace SkalProj_Datastrukturer_Minne
                 char nav = input[0];
                 string value = input.Substring(1);
 
-                switch (nav){
+                switch (nav)
+                {
                     case '+':
                         theList.Add(value);
                         Console.Write($"Added {value}. ");
@@ -123,7 +124,7 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine($"The list size is now {theList.Capacity}.");
 
             } while (true);
-          
+
         }
 
         /// <summary>
@@ -185,18 +186,73 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
-        }
+            Stack<string> theStack = new Stack<string>();
 
-        static void CheckParanthesis()
-        {
+            Console.WriteLine("Enter a string to add to the stack:"
+            string inputString = Console.ReadLine());
+            char[] inputArray = inputString.Split();
+
+            theStack(inputArray);
+
+
+            Console.WriteLine(
+                "+ to ad. E.g. '+Adam'.\n" +
+                "- to remove the fist.\n" +
+                "R to reverse.\n" +
+                "0 to exit.");
             /*
-             * Use this method to check if the paranthesis in a string is Correct or incorrect.
-             * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
-             * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+             * Impementera en ReverseText-metod som läser in en sträng från användaren och med 
+             * hjälp av en stack vänder ordning på teckenföljden för att sen skriva ut den omvända 
+             * strängen till användaren.             
              */
+            do
+            {
 
+                string input = Console.ReadLine();
+                char nav = input[0];
+                string value = input.Substring(1);
+
+                switch (nav) // Let's keep the same switch as above, for simplicity.
+                {
+                    case '+':
+                        theQueue.Enqueue(value);
+                        Console.Write($"{value} ställer sig i kön. ");
+                        break;
+                    case '-':
+                        // TODO: Change to TryPeek and TryDequeue respectively
+                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön. ");
+                        theQueue.Dequeue();
+                        break;
+                    case 'R':
+                        theStack.Reverse;
+                        foreach (char char in theStack)
+                            {
+                            Console.WriteLine("The list was trimmed.");
+                        }
+                        break;
+                    case '0':
+                        Console.Clear();
+                        // Exit
+                        return;
+                    
+                }
+                Console.WriteLine($"Nu är det {theQueue.Count} personer i kön.");
+
+            } while (true);
         }
 
     }
+
+    static void CheckParanthesis()
+    {
+        /*
+         * Use this method to check if the paranthesis in a string is Correct or incorrect.
+         * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+         * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+         */
+
+    }
+
+}
 }
 
