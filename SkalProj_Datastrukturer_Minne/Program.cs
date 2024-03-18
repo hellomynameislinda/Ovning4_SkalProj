@@ -139,7 +139,7 @@ namespace SkalProj_Datastrukturer_Minne
             */
             Queue<string> theQueue = new Queue<string>();
             Console.WriteLine("Start a string with + to add someone to the queue. E.g. '+Adam'.\n" +
-                "- to remove the fist.\n" +
+                "- to remove the first.\n" +
                 "T to trim the list.\n" +
                 "0 to exit.");
 
@@ -159,13 +159,9 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '-':
                         // TODO: Change to TryPeek and TryDequeue respectively
-                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön. ");
+                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön.");
                         theQueue.Dequeue();
                         break;
-                    //case 'T':
-                    //    theList.TrimExcess();
-                    //    Console.WriteLine("The list was trimmed.");
-                    //    break;
                     case '0':
                         Console.Clear();
                         // Exit
@@ -182,77 +178,49 @@ namespace SkalProj_Datastrukturer_Minne
         static void ExamineStack()
         {
             /*
-             * Loop this method until the user inputs something to exit to main menue.
-             * Create a switch with cases to push or pop items
-             * Make sure to look at the stack after pushing and and poping to see how it behaves
-            */
-            Stack<string> theStack = new Stack<string>();
-
-            Console.WriteLine("Enter a string to add to the stack:"
-            string inputString = Console.ReadLine());
-            char[] inputArray = inputString.Split();
-
-            theStack(inputArray);
-
-
-            Console.WriteLine(
-                "+ to ad. E.g. '+Adam'.\n" +
-                "- to remove the fist.\n" +
-                "R to reverse.\n" +
-                "0 to exit.");
-            /*
-             * Impementera en ReverseText-metod som läser in en sträng från användaren och med 
+             * Implementera en ReverseText-metod som läser in en sträng från användaren och med 
              * hjälp av en stack vänder ordning på teckenföljden för att sen skriva ut den omvända 
              * strängen till användaren.             
              */
             do
             {
 
-                string input = Console.ReadLine();
-                char nav = input[0];
-                string value = input.Substring(1);
+                Stack<string> theStack = new Stack<string>();
 
-                switch (nav) // Let's keep the same switch as above, for simplicity.
+                Console.WriteLine("Enter a string to add to the stack (or 0 to exit):");
+                string inputString = Console.ReadLine(); // TODO: Check this isn't empty.
+
+                if (inputString == "0") return; // Exit if user enters a 0, as this part does not require a menu
+
+                foreach (char c in inputString)
                 {
-                    case '+':
-                        theQueue.Enqueue(value);
-                        Console.Write($"{value} ställer sig i kön. ");
-                        break;
-                    case '-':
-                        // TODO: Change to TryPeek and TryDequeue respectively
-                        Console.Write($"{theQueue.Peek()} blir expidierad och lämnar kön. ");
-                        theQueue.Dequeue();
-                        break;
-                    case 'R':
-                        theStack.Reverse;
-                        foreach (char char in theStack)
-                            {
-                            Console.WriteLine("The list was trimmed.");
-                        }
-                        break;
-                    case '0':
-                        Console.Clear();
-                        // Exit
-                        return;
-                    
+                    theStack.Push(c.ToString());
                 }
-                Console.WriteLine($"Nu är det {theQueue.Count} personer i kön.");
+
+                string outputString = string.Empty;
+                foreach (string c in theStack)
+                {
+                    outputString += c;
+                }
+
+                Console.WriteLine($"Your string backwards is: {outputString}");
 
             } while (true);
         }
 
-    }
 
-    static void CheckParanthesis()
-    {
-        /*
-         * Use this method to check if the paranthesis in a string is Correct or incorrect.
-         * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
-         * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
-         */
 
+        static void CheckParanthesis()
+        {
+            /*
+             * Use this method to check if the paranthesis in a string is Correct or incorrect.
+             * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
+             * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
+             */
+
+        }
     }
 
 }
-}
+
 
